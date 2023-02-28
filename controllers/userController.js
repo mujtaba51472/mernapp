@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
     if (user) {
       res.status(200).json({
         message: "User Registered",
-        _id: user.id,
+        _id: user._id,
         email: user.email,
         name: user.email,
         token: generateToken(user._id),
@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
   const user = await userModel.findOne({ email });
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
-      _id: user.id,
+      _id: user._id,
       email: user.email,
       name: user.name,
       token: generateToken(user._id),
@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
 
 const getMe = async (req, res) => {
   console.log('usss' , req.user)
-  const {_id , email , name} = await userModel.findById(req.user.id)
+  const {_id , email , name} = await userModel.findById(req.user._id)
   res.status(200).json({
     name , 
     email ,
